@@ -20,16 +20,16 @@ module.exports.getPeers = (torrent,callback)=>{
 
     const socket = dgram.createSocket('udp4');
 
-    console.log('sending Connection Request')
+    // console.log('sending Connection Request')
     udpSend(socket,buildConnReq(),raw_url);
-    console.log('Sent Connection Request ! ')
+    // console.log('Sent Connection Request ! ')
 
 
 
 
 
     socket.on('message',response=>{
-        console.log(response);
+        // console.log(response);
 
         if(respType(response)==='connect'){
             const connResp =parseConnResp(response);
@@ -37,11 +37,11 @@ module.exports.getPeers = (torrent,callback)=>{
             const announceReq = buildAnnounceReq(connResp.connectionId,torrent);
 
             udpSend(socket,announceReq,raw_url);
-            console.log('Connect Response , Sent Announce Req !')
+            // console.log('Connect Response , Sent Announce Req !')
 
         }else if(respType(response)==='announce'){
             const announceResp = parseAnnounceResp(response);
-            console.log('Announce Sent ! ')
+            // console.log('Announce Sent ! ')
             callback(announceResp.peers);
         }
 
@@ -52,7 +52,7 @@ module.exports.getPeers = (torrent,callback)=>{
 function udpSend(socket,message,rawUrl,callback=()=>{}){
 
     const url = new Url.URL(rawUrl);
-    console.log(url);
+    // console.log(url);
     socket.send(message,0,message.length,url.port|'443',url.hostname,callback);
     
 

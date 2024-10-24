@@ -6,6 +6,7 @@ const download = require('./download')
 
 
 const torrent = torrentPraser.open('pp.torrent');
+const filepath = './downlods/'+torrent.info.name;
 
 console.log(torrent.announce.toString('utf8'))
 
@@ -15,4 +16,4 @@ console.log(torrent.announce.toString('utf8'))
 // })
 
 
-download(torrent);
+download(torrent,filepath);
